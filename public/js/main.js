@@ -206,6 +206,14 @@ async function applyTheme() {
 // rendered in that section - this is what powers the lightbox's prev/next.
 const galleries = {};
 
+// The hero photo is static markup (not built from server/data/content/*.json
+// like the other sections), so it gets its own one-photo gallery here instead
+// of via buildGallery(). It points at the full uncropped aerial photo (rather
+// than the desktop/mobile hero crops actually shown as the background) so
+// clicking it to zoom in shows the whole shot, not just whichever slice is
+// visible behind the "Godinez Resort" heading.
+galleries.hero = [{ url: 'images/hero-full.jpg', alt: 'Aerial view of Godinez Resort', credit: '' }];
+
 function buildGallery(items) {
   return items
     .filter((item) => item.photoUrl)

@@ -88,6 +88,7 @@ a:hover { text-decoration: underline; }
   height: 100%;
   object-fit: cover;
   border-radius: 0;
+  cursor: pointer;
 }
 .hero::before {
   content: "";
@@ -95,6 +96,10 @@ a:hover { text-decoration: underline; }
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 1;
+  /* This is just a darkening layer for text contrast, sitting right on top
+     of the clickable hero photo (z-index 0) - without this, it silently
+     absorbs every click/tap before it can reach the image underneath. */
+  pointer-events: none;
 }
 .hero-content { position: relative; z-index: 2; text-align: center; width: 100%; }
 .hero h1 { color: #fff; font-size: 3rem; }
