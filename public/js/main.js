@@ -440,33 +440,47 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showPrevPhoto();
 });
 
-// Mouse-wheel zoom, centered roughly on the cursor's intent (simple version:
-// just zoom in/out, keeping pan as-is).
+// Mouse-wheel / trackpad. A vertical scroll zooms in/out as before; a mostly
+// horizontal scroll (two-finger swipe on a trackpad) instead moves to the
+// next/previous photo, same as swiping on a touchscreen below.
 lightboxStage.addEventListener(
   'wheel',
   (e) => {
     if (lightbox.hidden) return;
     e.preventDefault();
+    if (zoomScale === 1 && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      if (e.deltaX > 12) showNextPhoto();
+      else if (e.deltaX < -12) showPrevPhoto();
+      return;
+    }
     setZoom(zoomScale - e.deltaY * 0.0025 * ZOOM_MAX);
   },
   { passive: false }
 );
 
 // Drag-to-pan with mouse/touch (pointer events cover both) once zoomed in.
+// When NOT zoomed, the same drag gesture instead swipes to the next/previous
+// photo - so photos can be browsed by swiping, not just via the arrow
+// buttons.
 let isDragging = false;
+let isSwiping = false;
 let dragStartX = 0;
 let dragStartY = 0;
 let panStartX = 0;
 let panStartY = 0;
+const SWIPE_THRESHOLD = 50;
 
 lightboxStage.addEventListener('pointerdown', (e) => {
-  if (zoomScale <= 1) return;
-  isDragging = true;
-  lightboxStage.classList.add('is-dragging');
   dragStartX = e.clientX;
   dragStartY = e.clientY;
-  panStartX = panX;
-  panStartY = panY;
+  if (zoomScale > 1) {
+    isDragging = true;
+    lightboxStage.classList.add('is-dragging');
+    panStartX = panX;
+    panStartY = panY;
+  } else {
+    isSwiping = true;
+  }
 });
 lightboxStage.addEventListener('pointermove', (e) => {
   if (!isDragging) return;
@@ -475,9 +489,20 @@ lightboxStage.addEventListener('pointermove', (e) => {
   applyZoomTransform();
 });
 ['pointerup', 'pointerleave', 'pointercancel'].forEach((evt) => {
-  lightboxStage.addEventListener(evt, () => {
-    isDragging = false;
-    lightboxStage.classList.remove('is-dragging');
+  lightboxStage.addEventListener(evt, (e) => {
+    if (isDragging) {
+      isDragging = false;
+      lightboxStage.classList.remove('is-dragging');
+    }
+    if (isSwiping) {
+      isSwiping = false;
+      const deltaX = e.clientX - dragStartX;
+      const deltaY = e.clientY - dragStartY;
+      if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < 0) showNextPhoto();
+        else showPrevPhoto();
+      }
+    }
   });
 });
 
