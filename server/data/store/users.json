@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "dcb2e7fe-2052-46d0-9776-0ab1a49e5979",
+      "username": "Rap",
+      "displayName": "Ralph Lester Mandin",
+      "role": "admin",
+      "passwordHash": "$2b$12$EgmqAvnf4X2cd07tgNebdet6zvntkH.LiShv35WfRGtEU7maVsbY6",
+      "createdAt": "2026-07-28T05:14:39.028Z"
+    },
+    {
+      "id": "951de063-0038-48aa-9b36-bf8f11879e4e",
+      "username": "BeaBins",
+      "displayName": "Bea Almodovar Mandin",
+      "role": "staff",
+      "passwordHash": "$2b$12$sAbrAvLS4.fiXbX6/tCjqO0t6Hbs.7mnI/8JpKBo6XdBuIDre6VUK",
+      "createdAt": "2026-07-28T05:18:09.144Z"
+    }
+  ]
+}

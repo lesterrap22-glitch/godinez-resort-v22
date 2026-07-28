@@ -1,0 +1,21 @@
+{
+  "name": "godinez-resort",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Godinez Resort website - front-end and booking backend",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.6.1",
+    "express-session": "^1.19.0",
+    "helmet": "^7.1.0",
+    "lowdb": "^1.0.0",
+    "multer": "^2.2.0"
+  }
+}

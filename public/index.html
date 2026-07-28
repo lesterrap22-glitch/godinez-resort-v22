@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Godinez Resort | Bacolod, Negros Occidental</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="#home" class="logo">Godinez <span>Resort</span></a>
+    <nav class="main-nav">
+      <a href="#villas">Villas</a>
+      <a href="#pools">Pools</a>
+      <a href="#restaurant">Restaurant</a>
+      <a href="#activities">Activities</a>
+      <a href="#tours">Travel &amp; Tours</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn btn-primary nav-cta" data-open-booking data-type="villa" data-item-id="general" data-item-name="General Inquiry">Book Now</button>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="placeholder-img hero-bg"></div>
+  <div class="hero-content container">
+    <h1>Godinez Resort</h1>
+    <p>Your home base for pool days, villa nights, and heritage tours around Bacolod, Negros Occidental.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" data-open-booking data-type="villa" data-item-id="general" data-item-name="Overnight Stay">Book a Villa</button>
+      <a href="#tours" class="btn btn-secondary">Explore Tours</a>
+    </div>
+  </div>
+</section>
+
+<section id="villas" class="section">
+  <div class="container">
+    <h2>Overnight Villas</h2>
+    <p class="section-intro">Six villas to choose from, with Milagros and Zacarias as our two biggest. Perfect for a relaxed overnight stay with family or friends.</p>
+    <div id="villas-grid" class="card-grid">Loading villas...</div>
+  </div>
+</section>
+
+<section id="pools" class="section alt">
+  <div class="container">
+    <h2>Swimming Pools</h2>
+    <p class="section-intro">Two shared pools, open to overnight and day-tour guests, with depths reaching up to 5 feet.</p>
+    <div id="pools-grid" class="card-grid">Loading pools...</div>
+  </div>
+</section>
+
+<section id="restaurant" class="section">
+  <div class="container" id="restaurant-content">Loading restaurant info...</div>
+</section>
+
+<section id="activities" class="section alt">
+  <div class="container">
+    <h2>Activities</h2>
+    <p class="section-intro">Hands-on, only-in-Negros experiences for guests of all ages.</p>
+    <div id="activities-grid" class="card-grid">Loading activities...</div>
+  </div>
+</section>
+
+<section id="tours" class="section">
+  <div class="container">
+    <h2>Travel &amp; Tours</h2>
+    <p class="section-intro">We organize guided tours around Bacolod and nearby cities, including the region's best-known heritage spots.</p>
+    <div id="tours-grid" class="card-grid">Loading tours...</div>
+  </div>
+</section>
+
+<section id="contact" class="section alt">
+  <div class="container contact-wrap">
+    <div>
+      <h2>Plan Your Visit</h2>
+      <p class="section-intro">Have a question, or want to book a group event? Reach out and our team will get back to you.</p>
+      <ul class="contact-list">
+        <li><strong>Location:</strong> Bacolod, Negros Occidental, Philippines</li>
+        <li><strong>Phone:</strong> +63 000 000 0000</li>
+        <li><strong>Email:</strong> hello@godinezresort.example</li>
+      </ul>
+    </div>
+    <button class="btn btn-primary" data-open-booking data-type="restaurant" data-item-id="general" data-item-name="General Reservation">Make a Reservation</button>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Godinez Resort.</p>
+    <p><a href="admin.html">Staff booking view</a></p>
+  </div>
+</footer>
+
+<!-- Booking modal -->
+<div id="booking-modal" class="modal-overlay" hidden>
+  <div class="modal">
+    <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    <h3 id="modal-title">Book Now</h3>
+    <p id="modal-item-name" class="modal-item-name"></p>
+    <form id="booking-form">
+      <label>Full name
+        <input type="text" name="name" required maxlength="150" />
+      </label>
+      <label>Email
+        <input type="email" name="email" required maxlength="200" />
+      </label>
+      <label>Phone number
+        <input type="tel" name="phone" required maxlength="30" placeholder="09XXXXXXXXX" />
+      </label>
+      <label>Preferred date
+        <input type="date" name="date" required />
+      </label>
+      <label>Number of guests
+        <input type="number" name="guests" min="1" max="50" required value="2" />
+      </label>
+      <label>Notes (optional)
+        <textarea name="notes" maxlength="1000" rows="3"></textarea>
+      </label>
+      <button type="submit" class="btn btn-primary" id="booking-submit">Submit Request</button>
+      <p id="booking-feedback" class="booking-feedback" role="status"></p>
+    </form>
+  </div>
+</div>
+
+<!-- Photo lightbox: click any real photo to view it larger and zoom in/out -->
+<div id="lightbox-modal" class="lightbox-overlay" hidden>
+  <button class="modal-close lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <div class="lightbox-toolbar">
+    <button type="button" id="lightbox-zoom-out" aria-label="Zoom out">&minus;</button>
+    <button type="button" id="lightbox-zoom-reset" aria-label="Reset zoom">Reset</button>
+    <button type="button" id="lightbox-zoom-in" aria-label="Zoom in">&plus;</button>
+  </div>
+  <button type="button" class="lightbox-nav lightbox-nav-prev" id="lightbox-prev" aria-label="Previous photo">&lsaquo;</button>
+  <div class="lightbox-stage" id="lightbox-stage">
+    <img id="lightbox-img" src="" alt="" draggable="false" />
+  </div>
+  <button type="button" class="lightbox-nav lightbox-nav-next" id="lightbox-next" aria-label="Next photo">&rsaquo;</button>
+  <p id="lightbox-caption" class="lightbox-caption"></p>
+  <p id="lightbox-counter" class="lightbox-counter"></p>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

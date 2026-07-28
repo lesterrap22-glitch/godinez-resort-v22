@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Staff Login | Godinez Resort</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .login-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; width: 100%; max-width: 400px; }
+  .login-card h1 { font-size: 1.4rem; }
+  .login-card label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 4px; }
+  .login-card input {
+    width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95rem;
+  }
+  .login-card .btn { width: 100%; margin-top: 18px; text-align: center; border: none; cursor: pointer; }
+  .login-feedback { font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+  .login-feedback.error { color: #a12; }
+  .login-feedback.ok { color: var(--color-forest-dark); }
+  .setup-note { background: #eef4ee; color: var(--color-forest-dark); font-size: 0.82rem; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <h1 id="form-title">Staff / Admin Login</h1>
+    <div id="setup-note" class="setup-note" hidden>
+      No admin account exists yet. Create the one admin account now - keep these credentials safe, since this
+      form only ever appears once.
+    </div>
+    <form id="login-form">
+      <div id="display-name-field" hidden>
+        <label for="displayName">Your name</label>
+        <input type="text" id="displayName" name="displayName" maxlength="100" autocomplete="name" />
+      </div>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" maxlength="40" autocomplete="username" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required />
+      <button type="submit" class="btn btn-primary" id="submit-btn">Log In</button>
+      <p id="feedback" class="login-feedback" role="status"></p>
+    </form>
+    <p style="margin-top:16px; font-size:0.85rem;"><a href="index.html">&larr; Back to site</a></p>
+  </div>
+</div>
+<script src="js/admin-login.js"></script>
+</body>
+</html>

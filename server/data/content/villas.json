@@ -1,0 +1,68 @@
+[
+  {
+    "id": "villa-milagros",
+    "name": "Milagros Villa",
+    "icon": "🏡",
+    "photoUrl": "images/villa-milagros.jpg",
+    "capacity": 25,
+    "bedrooms": 2,
+    "priceNote": "Starting at PHP 10,000/night",
+    "amenities": ["Air-conditioned bedrooms", "Private veranda", "Hot & cold shower", "Free Wi-Fi", "Mini fridge"],
+    "description": "One of our two largest overnight villas, ideal for families or small groups."
+  },
+  {
+    "id": "villa-zacarias",
+    "name": "Zacarias Villa",
+    "icon": "🏡",
+    "photoUrl": "images/villa-zacarias.jpg",
+    "capacity": 25,
+    "bedrooms": 2,
+    "priceNote": "Starting at PHP 10,000/night",
+    "amenities": ["Air-conditioned bedrooms", "Private veranda", "Hot & cold shower", "Free Wi-Fi", "Mini fridge"],
+    "description": "Our other largest villa, spacious enough for bigger groups or multi-family stays."
+  },
+  {
+    "id": "villa-bulalacao",
+    "name": "Bulalacao Villa",
+    "icon": "🏠",
+    "photoUrl": "images/villa-bulalacao.jpg",
+    "capacity": 6,
+    "bedrooms": 1,
+    "priceNote": "Starting at PHP 3,000/night",
+    "amenities": ["Air-conditioned bedrooms", "Garden view", "Hot & cold shower", "Free Wi-Fi"],
+    "description": "A roomy villa with garden views, comfortable for a mid-size group."
+  },
+  {
+    "id": "villa-garzo",
+    "name": "Garzo Villa",
+    "icon": "🏠",
+    "photoUrl": "images/villa-garzo.jpg",
+    "capacity": 6,
+    "bedrooms": 1,
+    "priceNote": "Starting at PHP 3,000/night",
+    "amenities": ["Air-conditioned bedroom", "Pool-facing balcony", "Hot & cold shower", "Free Wi-Fi"],
+    "description": "Perfect for couples or small families, with a balcony that looks out toward the pool area."
+  },
+  {
+    "id": "villa-pesquera",
+    "name": "Pesquera Villa",
+    "icon": "🏠",
+    "photoUrl": "images/villa-pesquera.jpg",
+    "capacity": 6,
+    "bedrooms": 1,
+    "priceNote": "Starting at PHP 3,000/night",
+    "amenities": ["Air-conditioned bedroom", "Rustic interiors", "Hot & cold shower", "Free Wi-Fi"],
+    "description": "A charming villa for guests who want a cozy, nature-close stay."
+  },
+  {
+    "id": "villa-mandin",
+    "name": "Mandin Villa",
+    "icon": "🛖",
+    "photoUrl": "images/villa-mandin.jpg",
+    "capacity": 6,
+    "bedrooms": 1,
+    "priceNote": "Starting at PHP 3,000/night",
+    "amenities": ["Air-conditioned bedroom", "Compact & private", "Hot & cold shower", "Free Wi-Fi"],
+    "description": "Our most intimate villa, great for solo travelers or couples looking for a quiet retreat."
+  }
+]

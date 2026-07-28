@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pool-main",
+    "name": "Main Shared Pool",
+    "icon": "🏊",
+    "photoUrl": "images/pool-main.jpg",
+    "depth": "Up to 5 feet",
+    "description": "Our main shared swimming pool for overnight guests and day-tour visitors, with depths reaching up to 5 feet."
+  },
+  {
+    "id": "pool-kiddie",
+    "name": "Kiddie Pool",
+    "icon": "🦆",
+    "photoUrl": "images/pool-kiddie.jpg",
+    "depth": "Shallow, child-friendly depth",
+    "description": "A dedicated shallow kiddie pool so the little ones can splash safely while parents relax nearby."
+  }
+]

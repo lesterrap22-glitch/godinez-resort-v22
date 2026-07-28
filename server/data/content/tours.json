@@ -1,0 +1,42 @@
+[
+  {
+    "id": "tour-the-ruins",
+    "name": "The Ruins",
+    "city": "Talisay City",
+    "description": "The iconic mansion ruins of Don Mariano Ledesma Lacson, one of Negros' most photographed landmarks.",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bb/The_Ruins%2C_Talisay%2C_Negros_Occidental.jpg",
+    "photoCredit": "Nataniel Luperte, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "id": "tour-balay-negrense",
+    "name": "Balay Negrense (Ancestral House)",
+    "city": "Silay City",
+    "description": "A restored 19th-century ancestral house-turned-museum showcasing the lifestyle of Negros' sugar barons.",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Balay_Negrense.JPG",
+    "photoCredit": "Elmer B. Domingo, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "id": "tour-san-sebastian",
+    "name": "San Sebastian Cathedral",
+    "city": "Bacolod City",
+    "description": "The historic seat of the Diocese of Bacolod, a striking landmark in the heart of the city.",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d1/San_Sebastian_Cathedral_in_Bacolod_City.jpg",
+    "photoCredit": "Mark Daniel Lecciones, CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "tour-capitol-lagoon",
+    "name": "Capitol Lagoon Park",
+    "city": "Bacolod City",
+    "description": "A relaxing city park and cultural stop, great for a stroll between heritage sites.",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Capitol_Lagoon_Bacolod_City_Philippines.jpg",
+    "photoCredit": "Kguirnela, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "id": "tour-panaad",
+    "name": "Panaad Park and Stadium",
+    "city": "Bacolod City",
+    "description": "Home of the Panaad sa Negros Festival grounds, showcasing miniature landmarks from every town in Negros Occidental.",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Panaad_Stadium_March_2023_renovated.jpg",
+    "photoCredit": "Negros Occidental PIO, Public Domain, via Wikimedia Commons"
+  }
+]

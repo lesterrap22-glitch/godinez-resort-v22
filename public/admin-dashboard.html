@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Content &amp; Settings | Godinez Resort</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .admin-wrap { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+  .admin-topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .admin-topbar .who { font-size: 0.9rem; color: var(--color-muted); }
+  #logout-btn { background: none; border: 1px solid #ccc; border-radius: 999px; padding: 6px 16px; cursor: pointer; font-size: 0.85rem; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; border-bottom: 2px solid #e6ddc8; }
+  .tab-btn {
+    background: none; border: none; padding: 10px 16px; cursor: pointer; font-size: 0.92rem;
+    color: var(--color-muted); border-bottom: 3px solid transparent; margin-bottom: -2px;
+  }
+  .tab-btn.active { color: var(--color-forest-dark); border-bottom-color: var(--color-forest-dark); font-weight: 600; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .edit-card {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 22px; margin-bottom: 20px;
+  }
+  .edit-card h3 { margin-bottom: 12px; }
+  .field-row { margin-bottom: 12px; }
+  .field-row label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; color: var(--color-muted); }
+  .field-row input[type="text"], .field-row input[type="number"], .field-row textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; font-family: inherit;
+  }
+  .field-row textarea { min-height: 70px; resize: vertical; }
+  .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .photo-row { display: flex; align-items: center; gap: 16px; margin: 12px 0; flex-wrap: wrap; }
+  .photo-row img { width: 120px; height: 90px; object-fit: cover; border-radius: 8px; background: #eee; }
+  .save-row { display: flex; gap: 12px; align-items: center; margin-top: 10px; }
+  .save-row .status { font-size: 0.85rem; }
+  .save-row .status.ok { color: var(--color-forest-dark); }
+  .save-row .status.error { color: #a12; }
+  .btn-small { padding: 8px 16px; font-size: 0.85rem; border: none; border-radius: 999px; cursor: pointer; background: var(--color-forest-dark); color: #fff; }
+  .btn-small.secondary { background: #eee; color: var(--color-text); }
+  .highlight-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .highlight-row input { flex: 1; }
+  .theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+  .theme-option { border: 2px solid transparent; border-radius: 12px; padding: 14px; cursor: pointer; background: #fff; box-shadow: var(--shadow); }
+  .theme-option.selected { border-color: var(--color-forest-dark); }
+  .theme-swatches { display: flex; gap: 6px; margin-bottom: 8px; }
+  .theme-swatch { width: 24px; height: 24px; border-radius: 50%; }
+  table.users-table { width: 100%; border-collapse: collapse; background: #fff; }
+  table.users-table th, table.users-table td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 0.88rem; text-align: left; }
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-topbar">
+    <div>
+      <h1 style="margin-bottom:4px;">Content &amp; Settings</h1>
+      <div class="who" id="who">Loading...</div>
+    </div>
+    <div>
+      <a href="admin.html" style="margin-right:16px;">Bookings &rarr;</a>
+      <button id="logout-btn" type="button">Log Out</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="villas">Villas</button>
+    <button class="tab-btn" data-tab="pools">Pools</button>
+    <button class="tab-btn" data-tab="restaurant">Restaurant</button>
+    <button class="tab-btn" data-tab="activities">Activities</button>
+    <button class="tab-btn" data-tab="tours">Tours</button>
+    <button class="tab-btn" data-tab="theme">Color Theme</button>
+    <button class="tab-btn" data-tab="users">Staff Accounts</button>
+    <button class="tab-btn" data-tab="account">My Account</button>
+  </div>
+
+  <div id="panel-villas" class="tab-panel active"><p>Loading...</p></div>
+  <div id="panel-pools" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-restaurant" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-activities" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-tours" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-theme" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-users" class="tab-panel"><p>Loading...</p></div>
+  <div id="panel-account" class="tab-panel"></div>
+
+  <p><a href="index.html">&larr; Back to site</a></p>
+</div>
+<script src="js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Godinez Resort - Booking Requests (Staff)</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .admin-wrap { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+  .admin-topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .admin-topbar .who { font-size: 0.9rem; color: var(--color-muted); }
+  .admin-topbar .links { display: flex; gap: 12px; align-items: center; }
+  .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .filters select { padding: 8px 10px; border-radius: 8px; border: 1px solid #ddd; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 0.88rem; }
+  th { background: var(--color-forest-dark); color: #fff; }
+  tr:hover { background: #faf6ee; }
+  .empty { color: var(--color-muted); padding: 20px 0; }
+  .status-select { padding: 5px 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.82rem; }
+  .status-select.pending { background: #fff8e6; }
+  .status-select.confirmed { background: #e9f7ee; }
+  .status-select.cancelled { background: #fdecea; }
+  #logout-btn { background: none; border: 1px solid #ccc; border-radius: 999px; padding: 6px 16px; cursor: pointer; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-topbar">
+    <div>
+      <h1 style="margin-bottom:4px;">Booking Requests</h1>
+      <div class="who" id="who">Loading...</div>
+    </div>
+    <div class="links">
+      <a href="admin-dashboard.html" id="dashboard-link" hidden>Content &amp; Settings &rarr;</a>
+      <button id="logout-btn" type="button">Log Out</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <select id="filter-type">
+      <option value="">All types</option>
+      <option value="villa">Villa</option>
+      <option value="tour">Tour</option>
+      <option value="activity">Activity</option>
+      <option value="restaurant">Restaurant</option>
+    </select>
+    <select id="filter-status">
+      <option value="">All statuses</option>
+      <option value="pending">Pending</option>
+      <option value="confirmed">Confirmed</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  <div id="bookings-table">Loading...</div>
+  <p><a href="index.html">&larr; Back to site</a></p>
+</div>
+<script src="js/admin.js"></script>
+</body>
+</html>
