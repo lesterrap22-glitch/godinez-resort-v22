@@ -1,0 +1,74 @@
+[
+  {
+    "id": "act-pick-pay-garden",
+    "name": "Pick-and-Pay Garden",
+    "icon": "🥬",
+    "photoUrl": "images/activity-pick-pay-garden.jpg",
+    "effort": "Medium",
+    "whyItWorks": "Connects guests to the land, and kids love harvesting their own vegetables and fruit.",
+    "description": "Wander through our working garden and hand-pick fresh vegetables and fruit, paid by weight, to take home or have cooked for you."
+  },
+  {
+    "id": "act-sugarcane-maze",
+    "name": "Sugarcane Maze",
+    "icon": "🌾",
+    "photoUrl": "images/activity-sugarcane-maze.jpg",
+    "effort": "High",
+    "whyItWorks": "Unique to Negros' sugarcane heritage, with strong potential to go viral on social media.",
+    "description": "Get lost (on purpose) in a living maze grown from Negros' signature crop - a fun, only-here photo opportunity."
+  },
+  {
+    "id": "act-inasal-masterclass",
+    "name": "Inasal Masterclass",
+    "icon": "🍗",
+    "photoUrl": "images/activity-inasal-masterclass.jpg",
+    "effort": "Low",
+    "whyItWorks": "A cultural immersion activity that builds top-of-mind status for the resort's food identity.",
+    "description": "Learn to marinate and grill chicken inasal the Bacolod way, guided by our in-house cooks."
+  },
+  {
+    "id": "act-kawa-baths",
+    "name": "Kawa Hot Baths",
+    "icon": "♨️",
+    "photoUrl": "images/activity-kawa-baths.jpg",
+    "effort": "Medium",
+    "whyItWorks": "A high-end relaxation experience that is very popular on TikTok and Reels.",
+    "description": "Soak in a traditional kawa (giant cauldron) filled with warm herbal water for a relaxing spa-like experience."
+  },
+  {
+    "id": "act-carabao-cart",
+    "name": "Carabao Cart Ride",
+    "icon": "🐃",
+    "photoUrl": "images/activity-carabao-cart.jpg",
+    "effort": "Low",
+    "whyItWorks": "A nostalgic, easy-to-run activity that highlights Negros' farming heritage for both kids and balikbayan guests.",
+    "description": "A slow, scenic ride around the grounds aboard a cart pulled by a carabao, our national farm animal."
+  },
+  {
+    "id": "act-native-games",
+    "name": "Native Games Afternoon",
+    "icon": "🎯",
+    "photoUrl": "images/activity-native-games.jpg",
+    "effort": "Low",
+    "whyItWorks": "Low-cost, high-fun group activity (palo sebo, tumbang preso, piko) that's great for family reunions and team-building groups.",
+    "description": "A guided session of classic Filipino outdoor games, perfect for big groups and multi-generational visits."
+  },
+  {
+    "id": "act-bonfire-acoustic",
+    "name": "Bonfire & Acoustic Nights",
+    "icon": "🔥",
+    "photoUrl": "images/activity-bonfire-acoustic.jpg",
+    "effort": "Medium",
+    "whyItWorks": "Turns an overnight stay into a shareable evening experience, extending guests' time (and spend) on-site.",
+    "description": "Gather around a bonfire in the evening with live acoustic music, perfect for overnight villa guests."
+  },
+  {
+    "id": "act-farm-to-table-class",
+    "name": "Farm-to-Table Cooking Class",
+    "icon": "👩‍🍳",
+    "photoUrl": "images/activity-farm-to-table-class.jpg",
+    "effort": "Medium",
+    "whyItWorks": "Pairs naturally with the Pick-and-Pay Garden and appeals to the growing wellness/organic-travel audience.",
+    "description": "Harvest ingredients from our garden, then cook a Negrense dish from scratch with guidance from our kitchen team."
+  }
+]

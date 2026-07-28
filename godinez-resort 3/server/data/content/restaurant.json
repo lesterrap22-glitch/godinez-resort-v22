@@ -1,0 +1,14 @@
+{
+  "name": "G-Resto",
+  "icon": "🍽️",
+  "photoUrl": "images/restaurant.jpg",
+  "tagline": "Negrense flavors, farm-to-table freshness",
+  "hours": "6:00 AM - 9:00 PM daily",
+  "highlights": [
+    { "name": "Chicken Inasal", "description": "Bacolod-style grilled chicken marinated in calamansi, vinegar, and native spices." },
+    { "name": "Kansi", "description": "A Negrense sour soup with beef shank and jackfruit, slow-cooked in batwan." },
+    { "name": "Chicken/Pork Batchoy", "description": "Bacolod's savory noodle soup topped with crushed chicharon and pork bits." },
+    { "name": "Napoleones & Piaya", "description": "Local Bacolod pastries and delicacies for dessert or pasalubong." }
+  ],
+  "notes": "Group reservations and event catering (birthdays, reunions, corporate outings) available on request."
+}
