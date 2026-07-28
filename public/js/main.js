@@ -124,7 +124,12 @@ function renderPools(pools) {
 function renderRestaurant(r) {
   const wrap = document.getElementById('restaurant-content');
   wrap.innerHTML = '';
-  wrap.className = 'restaurant-wrap';
+  // Add to the existing classes (this element starts as class="container" in
+  // index.html) instead of replacing className outright - overwriting it was
+  // silently dropping the "container" class, which is what gives every other
+  // section its max-width and side padding. That's why this section kept
+  // looking edge-to-edge no matter what the CSS said.
+  wrap.classList.add('restaurant-wrap');
 
   wrap.appendChild(cardMedia(r, 'tile-restaurant', 'restaurant', 0));
 

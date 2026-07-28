@@ -24,7 +24,14 @@
 </header>
 
 <section id="home" class="hero">
-  <img src="images/hero-collage.jpg" alt="Collage of Godinez Resort villas, pool, restaurant, and activities" class="hero-bg">
+  <picture>
+    <!-- Real drone/aerial photo of the resort (villas, pool, gardens, and the
+         sugarcane maze). The mobile crop keeps nearly the whole aerial view
+         since phone screens are naturally taller/narrower than desktop, which
+         suits this portrait photo much better than the wide desktop crop can. -->
+    <source media="(max-width: 720px)" srcset="images/hero-collage-mobile.jpg">
+    <img src="images/hero-collage.jpg" alt="Aerial view of Godinez Resort showing the villas, pool, gardens, and sugarcane maze" class="hero-bg">
+  </picture>
   <div class="hero-content container">
     <h1>Godinez Resort</h1>
     <p>Your home base for pool days, villa nights, and heritage tours around Bacolod, Negros Occidental.</p>
