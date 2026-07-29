@@ -218,7 +218,9 @@ a:hover { text-decoration: underline; }
   to { transform: scale(1.12); }
 }
 .hero-logo {
-  height: 96px;
+  /* ~3.4x the original 96px - the previous size was reading as too small
+     against the full hero photo, especially on wider/desktop screens. */
+  height: 330px;
   width: auto;
   max-width: 90%;
   object-fit: contain;
