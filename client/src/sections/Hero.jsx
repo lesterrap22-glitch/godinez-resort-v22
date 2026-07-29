@@ -82,7 +82,7 @@ export default function Hero() {
           <img className="hero-logo" src="/logo.png" alt="Godinez Resort" />
         </h1>
         <p>Your home base in Bago City, Negros Occidental - with pool days, villa nights, and heritage tours around the region.</p>
-        <p className="hero-facts">Built by Family, Open to Yours &middot; Bago City, Negros Occidental</p>
+        <p className="hero-facts">Built by Family, Open to Yours</p>
         <div className="hero-actions">
           <BookButton type="general" itemId="general" itemName="General Inquiry" label="Book Now" />
           <a href="#tours" className="btn btn-secondary">Explore Tours</a>

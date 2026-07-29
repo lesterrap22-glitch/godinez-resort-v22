@@ -86,13 +86,19 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(135deg, var(--color-teal-deep), #103f3f);
   box-shadow: 0 6px 14px rgba(31, 138, 138, 0.3);
 }
+/* Frosted-glass look (see-through, with a soft blur behind it) so it reads
+   as a real button - not just plain white text - while staying visibly
+   transparent next to Book Now's solid teal gradient fill. */
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.85);
   color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
-.btn-secondary:active { background: rgba(255, 255, 255, 0.32); }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.3); border-color: #fff; }
+.btn-secondary:active { background: rgba(255, 255, 255, 0.4); }
 
 /* Header */
 .site-header {
@@ -215,6 +221,7 @@ a:hover { text-decoration: underline; }
   height: 96px;
   width: auto;
   max-width: 90%;
+  object-fit: contain;
   filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
 }
 .hero::before {
@@ -701,31 +708,63 @@ a:hover { text-decoration: underline; }
 }
 
 /* Below 900px there's no room for all 8 nav links in one row, so the
-   toggle button appears and the link list moves to its own full-width
-   panel (hidden until opened) instead of wrapping mid-row. */
+   toggle button appears and the link list becomes a dropdown panel instead
+   of wrapping mid-row. The panel is positioned absolute (anchored to the
+   already-positioned .site-header) rather than pushed into the flex row,
+   so opening it overlays the page and never shifts the content underneath
+   down - the header's height, and everything below it, stay put. */
 @media (max-width: 900px) {
   .nav-toggle { display: flex; }
-  .nav-right { order: 2; }
   .main-nav {
-    display: none;
-    order: 3;
-    flex-basis: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     flex-direction: column;
     gap: 2px;
-    margin-top: 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    padding-top: 6px;
+    margin: 0;
+    padding: 10px 20px 16px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.3);
+    /* A two-tone gradient that sweeps into place as the panel opens, so
+       opening reads as a little color-theme shift rather than a flat
+       on/off toggle. */
+    background: linear-gradient(120deg, var(--color-teal-deep), var(--color-forest-dark));
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-position 0.5s ease, visibility 0s linear 0.3s;
   }
-  .main-nav-open { display: flex; }
+  .main-nav-open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    background-position: 0% 0;
+    /* Slight delay before the fade/slide starts, so the tap registers a
+       beat before the panel opens instead of snapping open instantly. */
+    transition: opacity 0.3s ease 0.06s, transform 0.3s ease 0.06s, background-position 0.5s ease, visibility 0s linear;
+  }
   .main-nav a {
     padding: 10px 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .main-nav a::after { display: none; }
 }
 
 @media (max-width: 720px) {
-  .hero-logo { height: 64px; }
+  /* The hero photo fills the full device viewport when the page opens on
+     mobile (100dvh accounts for the mobile browser's collapsing address
+     bar; 100vh is the fallback for browsers that don't support it) rather
+     than stopping at a fixed pixel height. */
+  .hero { min-height: 100vh; min-height: 100dvh; padding: 88px 0 64px; }
+  /* Sized by width (not a fixed height) so it scales cleanly with the
+     screen and never distorts - roughly 3x more prominent than the old
+     fixed 64px-tall mark, now that the hero has the room for it. */
+  .hero-logo { height: auto; width: min(86%, 460px); }
   /* Caption+dots move from bottom-anchored to top-anchored corners so they
      never compete for space with the centered hero-actions buttons
      (Book Now / Explore Tours) below, no matter how tall the caption text
@@ -746,8 +785,8 @@ a:hover { text-decoration: underline; }
   .nav-wrap { padding: 12px 16px; gap: 8px; }
   .logo-mark { height: 38px; }
   .nav-cta { padding: 10px 16px; font-size: 0.85rem; }
-  .hero { padding: 70px 0 50px; min-height: 480px; }
-  .hero-logo { height: 52px; }
+  .hero { padding: 84px 0 56px; min-height: 100vh; min-height: 100dvh; }
+  .hero-logo { height: auto; width: min(88%, 380px); }
   .hero p { font-size: 1rem; }
   .hero-facts { font-size: 0.75rem; }
   .hero-slide-caption { right: 76px; }

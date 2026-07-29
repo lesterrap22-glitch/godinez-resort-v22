@@ -24,14 +24,21 @@ export default function Header() {
     <header className="site-header">
       <div className="container nav-wrap">
         <Logo />
-        <nav className={`main-nav${menuOpen ? ' main-nav-open' : ''}`} id="main-nav">
+        <nav
+          className={`main-nav${menuOpen ? ' main-nav-open' : ''}`}
+          id="main-nav"
+          aria-hidden={!menuOpen}
+        >
           {NAV_LINKS.map((link) => (
             <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
               {link.label}
             </a>
           ))}
         </nav>
+        {/* Book Now sits first here so the hamburger toggle lands in the
+            actual right-hand corner of the header, not just left of it. */}
         <div className="nav-right">
+          <BookButton type="general" itemId="general" itemName="General Inquiry" label="Book Now" className="btn btn-primary nav-cta" />
           <button
             type="button"
             className={`nav-toggle${menuOpen ? ' nav-toggle-open' : ''}`}
@@ -44,7 +51,6 @@ export default function Header() {
             <span />
             <span />
           </button>
-          <BookButton type="general" itemId="general" itemName="General Inquiry" label="Book Now" className="btn btn-primary nav-cta" />
         </div>
       </div>
     </header>
