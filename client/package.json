@@ -1,0 +1,19 @@
+{
+  "name": "godinez-resort-client",
+  "private": true,
+  "version": "1.0.0",
+  "description": "React (Vite) front-end for the Godinez Resort site. Talks to the existing Express API in ../server - no backend logic lives here. Build output (dist/) is what the server actually serves; you only need this folder's own `npm install` if you're changing the front-end.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

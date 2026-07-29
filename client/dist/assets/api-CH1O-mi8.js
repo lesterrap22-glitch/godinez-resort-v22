@@ -1,0 +1,1 @@
+async function n(e,r){const t=await fetch(e,r);let a=null;try{a=await t.json()}catch{}if(!t.ok){const s=new Error(`Request to ${e} failed (${t.status})`);throw s.status=t.status,s.data=a,s}return a}export{n as f};

@@ -1,5 +1,5 @@
 // User store for the admin/staff login system.
-// Stored as a JSON file (server/store/users.json) with bcrypt-hashed
+// Stored as a JSON file (server/data/store/users.json) with bcrypt-hashed
 // passwords - never plaintext. There is deliberately NO default/seeded
 // account: the very first visit to /admin.html walks whoever gets there
 // first through creating the one admin account, so no factory-default

@@ -67,7 +67,7 @@ Render needs your code in a GitHub repository. The easiest way to do this withou
    - **Branch:** `main`
    - **Root Directory:** leave blank (unless your GitHub repo has the project inside a subfolder).
    - **Runtime:** Node
-   - **Build Command:** `npm install`
+   - **Build Command:** `npm install && npm run build`
    - **Start Command:** `npm start`
    - **Instance Type:** choose **Starter** (the free tier can't attach persistent storage, which this app needs).
 5. Don't click "Create Web Service" yet - first, in the same screen, click **Advanced** to add the disk and

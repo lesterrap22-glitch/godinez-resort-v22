@@ -32,8 +32,19 @@ body {
 }
 
 h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: 0 0 12px; color: var(--color-forest-dark); }
-h2 { font-size: 2rem; }
+h2 { font-size: 2.15rem; letter-spacing: -0.01em; }
 p { margin: 0 0 12px; }
+
+.eyebrow {
+  display: block;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  margin: 0 0 8px;
+}
 
 a { color: var(--color-forest-dark); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -52,11 +63,10 @@ a:hover { text-decoration: underline; }
 .btn:active { transform: translateY(0); }
 
 /* Primary buttons use a gradient + soft tinted shadow (rather than a flat
-   fill) for the same "depth" feel as the reference site, just in teal
-   instead of orange. Hover brightens the gradient and grows the shadow;
-   active (the moment it's actually pressed/tapped) deepens it and settles
-   the button down slightly - so every state is visibly, not just subtly,
-   different. */
+   fill) for a "depth" feel, in teal. Hover brightens the gradient and grows
+   the shadow; active (the moment it's actually pressed/tapped) deepens it
+   and settles the button down slightly - so every state is visibly, not
+   just subtly, different. */
 .btn-primary {
   background: linear-gradient(135deg, var(--color-teal-bright), var(--color-teal-deep));
   color: #fff;
@@ -94,10 +104,37 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 .logo { display: inline-flex; align-items: center; }
-.logo-mark { height: 34px; width: auto; display: block; }
+.logo-mark {
+  height: 46px;
+  width: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.logo:hover .logo-mark,
+.logo:focus-visible .logo-mark {
+  transform: scale(1.06);
+}
 .main-nav { display: flex; gap: 18px; flex-wrap: wrap; }
-.main-nav a { color: #f1ebda; font-weight: 500; transition: color 0.15s ease; }
+.main-nav a {
+  position: relative;
+  color: #f1ebda;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  padding-bottom: 3px;
+}
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-gold);
+  transition: width 0.25s ease;
+}
 .main-nav a:hover { color: var(--color-gold); text-decoration: none; }
+.main-nav a:hover::after,
+.main-nav a:focus-visible::after { width: 100%; }
 .nav-cta { white-space: nowrap; }
 
 /* Hero */
@@ -110,7 +147,11 @@ a:hover { text-decoration: underline; }
   align-items: center;
   overflow: hidden;
 }
-.hero-bg {
+/* Hero background is a slow-cycling slideshow (a "Ken Burns" effect - each
+   photo slowly zooms while it's showing, crossfading into the next) rather
+   than one static photo, so it reads a bit like moving footage even though
+   it's built from stills. */
+.hero-slide {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -119,6 +160,24 @@ a:hover { text-decoration: underline; }
   object-fit: cover;
   border-radius: 0;
   cursor: pointer;
+  filter: saturate(1.12) contrast(1.05) brightness(1.02);
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 1.4s ease;
+}
+.hero-slide-active {
+  opacity: 1;
+  animation: hero-ken-burns 6s ease-in-out forwards;
+}
+@keyframes hero-ken-burns {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+.hero-logo {
+  height: 96px;
+  width: auto;
+  max-width: 90%;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
 }
 .hero::before {
   content: "";
@@ -126,20 +185,25 @@ a:hover { text-decoration: underline; }
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 1;
-  /* This is just a darkening layer for text contrast, sitting right on top
-     of the clickable hero photo (z-index 0) - without this, it silently
-     absorbs every click/tap before it can reach the image underneath. */
   pointer-events: none;
 }
 .hero-content { position: relative; z-index: 2; text-align: center; width: 100%; }
-.hero h1 { color: #fff; font-size: 3rem; }
+.hero h1 { margin: 0 0 22px; line-height: 0; }
 .hero p { font-size: 1.15rem; max-width: 600px; margin: 0 auto 24px; }
+.hero-facts {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: -12px auto 28px;
+}
 .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* Sections */
-.section { padding: 64px 0; }
+.section { padding: 76px 0; }
 .section.alt { background: #f1ead9; }
-.section-intro { color: var(--color-muted); max-width: 700px; }
+.section-intro { color: var(--color-muted); max-width: 700px; font-size: 1.05rem; }
 
 .card-grid {
   display: grid;
@@ -155,6 +219,11 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14);
 }
 .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card h3 { margin: 0; font-size: 1.15rem; }
@@ -178,28 +247,6 @@ a:hover { text-decoration: underline; }
   width: fit-content;
 }
 
-/* Placeholder "photo" blocks - used only for the hero banner now.
-   Swap public/js/main.js's hero-bg element for a real <img> once you have a photo. */
-.placeholder-img {
-  position: relative;
-  min-height: 160px;
-  background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-gold) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.placeholder-img::after {
-  content: "\1F4F7  " attr(data-caption);
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 0 16px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.35);
-}
-/* Icon-illustration tiles for villas/pools/restaurant/activities - a nicer stand-in
-   until real photos are available. Swap public/js/main.js's iconTile() output for
-   a real <img> per item once you have photos (see public/images/README.txt). */
 .icon-tile {
   position: relative;
   min-height: 150px;
@@ -214,7 +261,10 @@ a:hover { text-decoration: underline; }
 .icon-tile .icon-tile-glyph {
   font-size: 3rem;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+  display: inline-block;
+  transition: transform 0.35s ease;
 }
+.card:hover .icon-tile-glyph { transform: scale(1.1); }
 .icon-tile.tile-villa { --tile-color-a: #2d5a3d; --tile-color-b: #7fae63; }
 .icon-tile.tile-pool { --tile-color-a: #145c78; --tile-color-b: #4fb3c9; }
 .icon-tile.tile-restaurant { --tile-color-a: #7a3b1e; --tile-color-b: #d9a441; }
@@ -222,8 +272,9 @@ a:hover { text-decoration: underline; }
 
 /* Real photos on cards - full-bleed (object-fit: cover) so every photo
    fills 100% of its tile with no letterboxing or border, cropping evenly
-   to fit. The gradient background is just a placeholder color shown for a
-   moment while the photo itself is still loading. */
+   to fit. A gentle saturation/contrast lift keeps AI-generated source
+   photos from reading as flat/washed-out - the gradient background is just
+   a placeholder color shown for a moment while the photo itself loads. */
 .tour-photo-wrap {
   position: relative;
   height: 220px;
@@ -243,7 +294,10 @@ a:hover { text-decoration: underline; }
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: saturate(1.15) contrast(1.06) brightness(1.02);
+  transition: transform 0.5s ease;
 }
+.tour-photo-wrap:hover .tour-photo { transform: scale(1.08); }
 .photo-credit {
   font-size: 0.68rem;
   color: rgba(255, 255, 255, 0.85);
@@ -295,9 +349,6 @@ a:hover { text-decoration: underline; }
   z-index: 100;
   padding: 16px;
 }
-.modal-overlay[hidden] {
-  display: none;
-}
 .modal {
   background: #fff;
   border-radius: var(--radius);
@@ -327,9 +378,9 @@ a:hover { text-decoration: underline; }
 }
 .modal-close:hover { background: rgba(0, 0, 0, 0.06); color: var(--color-forest-dark); }
 .modal-item-name { color: var(--color-gold-dark); font-weight: 600; margin-bottom: 12px; }
-#booking-form { display: flex; flex-direction: column; gap: 12px; }
-#booking-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; font-weight: 600; color: var(--color-forest-dark); }
-#booking-form input, #booking-form textarea {
+.booking-form { display: flex; flex-direction: column; gap: 12px; }
+.booking-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; font-weight: 600; color: var(--color-forest-dark); }
+.booking-form input, .booking-form textarea {
   font-family: inherit;
   font-size: 0.95rem;
   padding: 9px 10px;
@@ -350,13 +401,7 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: center;
 }
-.lightbox-overlay[hidden] {
-  display: none;
-}
 .lightbox-close {
-  /* The "x" glyph itself stays the same visual size (font-size below), but
-     the button's own box is a much bigger 48x48px touch target, centered on
-     that glyph - the extra hit area is invisible until hovered/tapped. */
   position: fixed;
   top: 10px;
   right: 10px;
@@ -372,6 +417,8 @@ a:hover { text-decoration: underline; }
   background: rgba(255, 255, 255, 0);
   transition: background 0.15s ease;
   z-index: 210;
+  border: none;
+  cursor: pointer;
 }
 .lightbox-close:hover,
 .lightbox-close:focus-visible {
@@ -407,12 +454,13 @@ a:hover { text-decoration: underline; }
   cursor: grab;
 }
 .lightbox-stage.is-dragging { cursor: grabbing; }
-#lightbox-img {
+.lightbox-img {
   max-width: 90vw;
   max-height: 82vh;
   user-select: none;
   -webkit-user-drag: none;
   will-change: transform;
+  filter: saturate(1.12) contrast(1.05);
 }
 .lightbox-caption {
   position: fixed;
@@ -456,13 +504,92 @@ a:hover { text-decoration: underline; }
 .lightbox-nav:hover { background: rgba(255, 255, 255, 0.28); }
 .lightbox-nav-prev { left: 16px; }
 .lightbox-nav-next { right: 16px; }
-.lightbox-nav[hidden], .lightbox-counter[hidden] {
-  display: none;
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .logo-mark, .hero-slide, .card, .tour-photo, .icon-tile-glyph, .main-nav a::after, .btn {
+    transition: none !important;
+  }
+  .hero-slide-active { animation: none !important; }
+  .hero-slide:first-child { opacity: 1; }
+  .card:hover, .tour-photo-wrap:hover .tour-photo, .logo:hover .logo-mark {
+    transform: none !important;
+  }
 }
 
 @media (max-width: 720px) {
-  .hero h1 { font-size: 2.2rem; }
+  .hero-logo { height: 64px; }
   .lightbox-nav { width: 40px; height: 40px; font-size: 1.7rem; }
   .restaurant-wrap { grid-template-columns: 1fr; }
   .restaurant-wrap .tour-photo-wrap { height: 300px; }
 }
+
+/* ---------------- Admin pages ---------------- */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; width: 100%; max-width: 400px; }
+.login-card h1 { font-size: 1.4rem; }
+.login-card label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 4px; }
+.login-card input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95rem; }
+.login-card .btn { width: 100%; margin-top: 18px; text-align: center; border: none; cursor: pointer; }
+.login-feedback { font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+.login-feedback.error { color: #a12; }
+.login-feedback.ok { color: var(--color-forest-dark); }
+.setup-note { background: #eef4ee; color: var(--color-forest-dark); font-size: 0.82rem; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
+
+.admin-wrap { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+.admin-topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.admin-topbar .who { font-size: 0.9rem; color: var(--color-muted); }
+.admin-topbar .links { display: flex; gap: 12px; align-items: center; }
+.admin-logout-btn { background: none; border: 1px solid #ccc; border-radius: 999px; padding: 6px 16px; cursor: pointer; font-size: 0.85rem; }
+
+.filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.filters select { padding: 8px 10px; border-radius: 8px; border: 1px solid #ddd; }
+table.bookings-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+table.bookings-table th, table.bookings-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 0.88rem; }
+table.bookings-table th { background: var(--color-forest-dark); color: #fff; }
+table.bookings-table tr:hover { background: #faf6ee; }
+.admin-empty { color: var(--color-muted); padding: 20px 0; }
+.status-select { padding: 5px 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.82rem; }
+.status-select.pending { background: #fff8e6; }
+.status-select.confirmed { background: #e9f7ee; }
+.status-select.cancelled { background: #fdecea; }
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; border-bottom: 2px solid #e6ddc8; }
+.tab-btn {
+  background: none; border: none; padding: 10px 16px; cursor: pointer; font-size: 0.92rem;
+  color: var(--color-muted); border-bottom: 3px solid transparent; margin-bottom: -2px;
+}
+.tab-btn.active { color: var(--color-forest-dark); border-bottom-color: var(--color-forest-dark); font-weight: 600; }
+.edit-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 22px; margin-bottom: 20px; }
+.edit-card h3 { margin-bottom: 12px; }
+.field-row { margin-bottom: 12px; }
+.field-row label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; color: var(--color-muted); }
+.field-row input[type="text"], .field-row input[type="number"], .field-row input[type="password"], .field-row textarea, .field-row select {
+  width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; font-family: inherit;
+}
+.field-row textarea { min-height: 70px; resize: vertical; }
+.field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.photo-row { display: flex; align-items: center; gap: 16px; margin: 12px 0; flex-wrap: wrap; }
+.photo-row img { width: 120px; height: 90px; object-fit: cover; border-radius: 8px; background: #eee; }
+.save-row { display: flex; gap: 12px; align-items: center; margin-top: 10px; }
+.save-row .status { font-size: 0.85rem; }
+.save-row .status.ok { color: var(--color-forest-dark); }
+.save-row .status.error { color: #a12; }
+.btn-small { padding: 8px 16px; font-size: 0.85rem; border: none; border-radius: 999px; cursor: pointer; background: var(--color-forest-dark); color: #fff; }
+.btn-small.secondary { background: #eee; color: var(--color-text); }
+.highlight-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.highlight-row input { flex: 1; }
+.theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.theme-option { border: 2px solid transparent; border-radius: 12px; padding: 14px; cursor: pointer; background: #fff; box-shadow: var(--shadow); }
+.theme-option.selected { border-color: var(--color-forest-dark); }
+.theme-swatches { display: flex; gap: 6px; margin-bottom: 8px; }
+.theme-swatch { width: 24px; height: 24px; border-radius: 50%; }
+table.users-table { width: 100%; border-collapse: collapse; background: #fff; }
+table.users-table th, table.users-table td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 0.88rem; text-align: left; }

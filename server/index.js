@@ -92,7 +92,10 @@ app.use('/api/bookings', bookingRoutes);
 // DEPLOYMENT.md. This still serves them at the same public URL path
 // (/images/whatever.jpg) that server/content/*.json's photoUrl fields use.
 app.use('/images', express.static(path.join(__dirname, 'data', 'images')));
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// The front-end is now a React (Vite) app built to client/dist/ (run `npm
+// run build`, or `npm --prefix client run dev` for a live-reloading copy
+// while working on it) - this replaced the old vanilla HTML/JS in public/.
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
 // Multer (file upload) errors land here instead of crashing the request -
 // e.g. a photo over the 8MB limit - so the admin dashboard gets a clean

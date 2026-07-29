@@ -6,9 +6,11 @@ view for managing bookings.
 
 ## What's included
 
-- **Front-end** (`public/`): plain HTML/CSS/JS - no build step, no framework. Open and edit directly.
+- **Front-end** (`client/`): a React (Vite) app. Four pages - the public site, staff login, staff bookings view,
+  and the admin content dashboard - each its own small React app, all sharing one component library and one
+  stylesheet.
 - **Backend** (`server/`): Node.js + Express API that serves the site's content, handles bookings, and runs the
-  login/admin system.
+  login/admin system. Unchanged by the front-end rewrite - same routes, same behavior.
 - **Public sections**: Home, Villas, Pools, In-house Restaurant (G-Resto), Activities, Travel & Tours, Contact.
 - **Booking**: every "Book Now" style button opens a form; submissions are saved and viewable/manageable at
   `/admin.html` once logged in.
@@ -24,10 +26,17 @@ Requires [Node.js](https://nodejs.org) (v18 or newer).
 ```
 cd godinez-resort
 npm install
+npm run build
 npm start
 ```
 
 Then open **http://localhost:3000** in your browser.
+
+`npm install` also installs the front-end's own dependencies (via a `postinstall` step); `npm run build` compiles
+the React app into `client/dist/`, which is what the server actually serves. If you're actively editing the
+front-end, run `npm --prefix client run dev` in a second terminal instead for instant hot-reload at
+**http://localhost:5173** (it proxies `/api` and `/images` requests to the Express server on port 3000, so run both
+at once while developing).
 
 ### First-time setup
 
@@ -39,17 +48,25 @@ dashboard's "Staff Accounts" tab.
 
 ## Editing the front-end
 
-Everything is in `public/`:
+Everything is in `client/src/`:
 
-- `public/index.html` - page structure and sections.
-- `public/css/style.css` - colors, fonts, layout. Base colors are CSS variables (`--color-forest`, `--color-gold`,
-  etc.) - the admin dashboard's "Color Theme" tab overrides these with a few preset combinations, so you don't
-  need to edit CSS by hand to reskin the site.
-- `public/js/main.js` - fetches data from the API and renders the villa/pool/activity/tour cards, the photo
-  lightbox, and the booking modal.
-- `public/js/admin.js` / `public/js/admin-login.js` / `public/js/admin-dashboard.js` - the staff/admin pages.
+- `client/src/App.jsx` - assembles the public site's sections; `client/src/main.jsx` mounts it.
+- `client/src/sections/` - one component per public-site section (Hero, Villas, Pools, Restaurant, Activities,
+  Tours, Contact) - each fetches its own data from the API.
+- `client/src/components/` - shared pieces: `Logo`, `Header`, `Footer`, `CardMedia`/`PhotoTile`/`IconTile`,
+  `BookButton`, `BookingModal`, `Lightbox`.
+- `client/src/context/SiteContext.jsx` - shared state for the photo galleries, the lightbox, and the booking modal,
+  so sections/cards don't need deeply-passed callback props.
+- `client/src/AdminLoginApp.jsx`, `client/src/AdminApp.jsx`, `client/src/AdminDashboardApp.jsx` - the staff/admin
+  pages, each with its own Vite entry (`admin-login-main.jsx`, `admin-main.jsx`, `admin-dashboard-main.jsx`).
+- `client/src/admin/` - the dashboard's per-tab pieces (`ListSectionPanel`, `RestaurantPanel`, `ThemePanel`,
+  `UsersPanel`, `AccountPanel`).
+- `client/src/styles.css` - colors, fonts, layout for every page. Base colors are CSS variables (`--color-forest`,
+  `--color-gold`, etc.) - the admin dashboard's "Color Theme" tab overrides these with a few preset combinations,
+  so you don't need to edit CSS by hand to reskin the site.
 
-No build tools, no compiling - front-end edits just need a browser refresh.
+After editing, either keep `npm --prefix client run dev` running for instant hot-reload, or run `npm run build`
+and refresh to see changes through the production server.
 
 ## Editing content without the admin dashboard
 
@@ -82,18 +99,21 @@ every admin edit and photo upload survives restarts and redeploys.
 - `server/lib/contentStore.js` - reads/writes the content JSON fresh from disk (no restart needed to see edits).
 - `server/lib/db.js` - tiny JSON-file database for bookings (uses the `lowdb` package, no database server to install).
 - `server/lib/validate.js` - server-side validation for booking submissions.
-- `server/index.js` - the Express server entry point (security headers, sessions, route wiring).
+- `server/index.js` - the Express server entry point (security headers, sessions, route wiring, and serving
+  `client/dist/`).
 
 ## Going live
 
 See **`DEPLOYMENT.md`** for a full step-by-step walkthrough of putting this on the public internet (hosting,
-environment variables, persistent storage, custom domain).
+environment variables, persistent storage, custom domain). The build command there now runs `npm run build` too,
+so the React front-end gets compiled as part of every deploy.
 
 ## Security
 
 See **`SECURITY-REVIEW.md`** for a full write-up of what's been checked and fixed. Short version: login/sessions,
 role-based access (admin vs staff), rate-limited login and booking forms, validated + magic-byte-checked photo
-uploads, and output encoding that prevents admin-entered text from ever being treated as HTML/script.
+uploads, and output encoding that prevents admin-entered text from ever being treated as HTML/script (React's
+default `{value}` JSX interpolation escapes by default, same as the old `textContent`-only rendering it replaced).
 
 Two things that live outside the app's code, worth double-checking before (and after) you go live:
 
@@ -110,7 +130,7 @@ godinez-resort/
 ├── DEPLOYMENT.md
 ├── SECURITY-REVIEW.md
 ├── server/
-│   ├── index.js              # Express app entry point
+│   ├── index.js              # Express app entry point - also serves client/dist/
 │   ├── data/                  # ALL mutable data - mount your persistent disk here (see DEPLOYMENT.md)
 │   │   ├── content/            # Editable site copy (villas, pools, activities, tours, restaurant, theme)
 │   │   ├── store/               # bookings.json + users.json
@@ -118,11 +138,19 @@ godinez-resort/
 │   ├── routes/                 # API route handlers (content, admin, auth, bookings)
 │   ├── middleware/auth.js      # requireAuth / requireAdmin
 │   └── lib/                    # Validation, user store, session registry, content store, JSON database
-└── public/
-    ├── index.html
-    ├── admin.html               # Staff bookings view (login required)
-    ├── admin-login.html         # Login / first-run admin setup
-    ├── admin-dashboard.html     # Admin content editor (login required, admin role)
-    ├── css/style.css
-    └── js/                      # main.js, admin.js, admin-login.js, admin-dashboard.js
+└── client/                    # React (Vite) front-end - npm run build compiles this to client/dist/
+    ├── package.json
+    ├── vite.config.js
+    ├── index.html               # Public site entry
+    ├── admin-login.html
+    ├── admin.html
+    ├── admin-dashboard.html
+    └── src/
+        ├── main.jsx / App.jsx / styles.css
+        ├── components/          # Logo, Header, Footer, CardMedia, PhotoTile, BookButton, BookingModal, Lightbox
+        ├── context/SiteContext.jsx
+        ├── sections/            # Hero, Villas, Pools, Restaurant, Activities, Tours, Contact
+        ├── admin/               # Dashboard tab panels
+        ├── AdminLoginApp.jsx / AdminApp.jsx / AdminDashboardApp.jsx
+        └── *-main.jsx           # One Vite entry script per page
 ```
