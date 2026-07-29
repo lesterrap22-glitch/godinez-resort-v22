@@ -11,10 +11,12 @@ export default function Header() {
           <a href="#pools">Pools</a>
           <a href="#restaurant">Restaurant</a>
           <a href="#activities">Activities</a>
+          <a href="#events-pavilion">Events Pavilion</a>
+          <a href="#map">Resort Map</a>
           <a href="#tours">Travel &amp; Tours</a>
           <a href="#contact">Contact</a>
         </nav>
-        <BookButton type="villa" itemId="general" itemName="General Inquiry" label="Book Now" className="btn btn-primary nav-cta" />
+        <BookButton type="general" itemId="general" itemName="General Inquiry" label="Book Now" className="btn btn-primary nav-cta" />
       </div>
     </header>
   );

@@ -2,7 +2,7 @@
 // We never trust the browser: every field here is re-checked on the server,
 // even though the front-end form also validates before submitting.
 
-const ALLOWED_TYPES = ['villa', 'tour', 'activity', 'restaurant'];
+const ALLOWED_TYPES = ['villa', 'tour', 'activity', 'restaurant', 'event'];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Basic phone check: digits, spaces, +, -, ( ) only, 7-20 chars long.

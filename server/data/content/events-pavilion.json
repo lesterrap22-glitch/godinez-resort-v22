@@ -1,0 +1,27 @@
+{
+  "name": "Events Pavilion",
+  "icon": "🎪",
+  "photoUrl": "",
+  "tagline": "Weddings, reunions, and celebrations under a rustic, farm-style roof.",
+  "capacity": "Up to 150 guests, seated",
+  "description": "An open-air, barn-inspired pavilion surrounded by sugarcane fields and garden views - built to host our own family's biggest celebrations, and now open to yours.",
+  "highlights": [
+    {
+      "name": "Rustic Barn Styling",
+      "description": "Exposed wood trusses, capiz-shell lighting, and long communal tables that feel like a family fiesta, not a rented hall."
+    },
+    {
+      "name": "Garden & Field Views",
+      "description": "Open sides overlooking the Pick-and-Pay Garden and sugarcane fields, best enjoyed at golden hour."
+    },
+    {
+      "name": "Farm-to-Table Catering",
+      "description": "Full event catering by G-Resto, from Chicken Inasal buffets to plated Negrense menus."
+    },
+    {
+      "name": "Sound & Lighting Ready",
+      "description": "Built-in power, string lights, and open floor space for a stage, live band, or program."
+    }
+  ],
+  "notes": "Ideal for weddings, family reunions, milestone birthdays, and corporate outings - ask about full-resort buyouts for multi-day celebrations."
+}

@@ -6,6 +6,25 @@ const TYPE_LABELS = {
   tour: 'Book a Tour',
   activity: 'Reserve an Activity',
   restaurant: 'Restaurant Reservation',
+  event: 'Events Pavilion Inquiry',
+};
+
+// When a guest opens booking via the general "Book Now" button (header or
+// hero) rather than a specific card, `booking.type` is the sentinel value
+// 'general' and this picker lets them say what they actually want - one
+// button covering villas, G-Resto, activities, and the Events Pavilion,
+// instead of a button per category.
+const GENERAL_CATEGORIES = [
+  { value: 'villa', label: 'A Villa (Overnight Stay)' },
+  { value: 'restaurant', label: 'G-Resto (Dining Reservation)' },
+  { value: 'activity', label: 'An Activity' },
+  { value: 'event', label: 'The Events Pavilion' },
+];
+const GENERAL_ITEM_NAMES = {
+  villa: 'Villa Inquiry',
+  restaurant: 'G-Resto Reservation',
+  activity: 'Activity Inquiry',
+  event: 'Events Pavilion Inquiry',
 };
 
 export default function BookingModal() {
@@ -13,6 +32,8 @@ export default function BookingModal() {
   const formRef = useRef(null);
   const [feedback, setFeedback] = useState({ text: '', kind: '' });
   const [submitting, setSubmitting] = useState(false);
+  const [generalCategory, setGeneralCategory] = useState('villa');
+  const isGeneral = booking.type === 'general';
 
   // Reset the form + feedback each time a fresh booking flow opens, the
   // same as openModal() did in main.js.
@@ -22,6 +43,7 @@ export default function BookingModal() {
       const guestsField = formRef.current.querySelector('[name="guests"]');
       if (guestsField) guestsField.value = 2;
       setFeedback({ text: '', kind: '' });
+      setGeneralCategory('villa');
     }
   }, [booking.open, booking.type, booking.itemId]);
 
@@ -31,9 +53,9 @@ export default function BookingModal() {
     e.preventDefault();
     const data = new FormData(formRef.current);
     const payload = {
-      type: booking.type,
+      type: isGeneral ? generalCategory : booking.type,
       itemId: booking.itemId,
-      itemName: booking.itemName,
+      itemName: isGeneral ? GENERAL_ITEM_NAMES[generalCategory] : booking.itemName,
       name: data.get('name'),
       email: data.get('email'),
       phone: data.get('phone'),
@@ -74,9 +96,18 @@ export default function BookingModal() {
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal">
         <button type="button" className="modal-close" aria-label="Close" onClick={closeBooking}>&times;</button>
-        <h3>{TYPE_LABELS[booking.type] || 'Book Now'}</h3>
-        <p className="modal-item-name">{booking.itemName}</p>
+        <h3>{isGeneral ? 'Book Now' : TYPE_LABELS[booking.type] || 'Book Now'}</h3>
+        <p className="modal-item-name">{isGeneral ? GENERAL_ITEM_NAMES[generalCategory] : booking.itemName}</p>
         <form ref={formRef} className="booking-form" onSubmit={handleSubmit}>
+          {isGeneral && (
+            <label>What would you like to book?
+              <select value={generalCategory} onChange={(e) => setGeneralCategory(e.target.value)}>
+                {GENERAL_CATEGORIES.map((c) => (
+                  <option key={c.value} value={c.value}>{c.label}</option>
+                ))}
+              </select>
+            </label>
+          )}
           <label>Full name
             <input type="text" name="name" required maxLength={150} />
           </label>

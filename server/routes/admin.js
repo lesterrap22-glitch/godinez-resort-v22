@@ -65,6 +65,94 @@ function cleanString(v, maxLen = 2000) {
   return sanitize(String(v).trim().slice(0, maxLen));
 }
 
+// --- Restaurant & Events Pavilion: singleton sections ---
+// These GET routes must be registered before the generic '/content/:section'
+// route below - Express matches routes in registration order, and
+// '/content/:section' matches a path like '/content/restaurant' just as
+// well as any list-section name, so it would otherwise intercept these
+// requests and return a false "Unknown section." 404 before ever reaching
+// the specific handlers here. (This was actually happening for GET
+// /content/restaurant until this reordering - PUT/POST were unaffected
+// since their generic counterpart requires an extra /:id segment.)
+
+router.get('/content/restaurant', (req, res) => {
+  res.json(store.read('restaurant'));
+});
+
+router.put('/content/restaurant', (req, res) => {
+  const restaurant = store.read('restaurant');
+  const body = req.body || {};
+
+  for (const field of ['name', 'tagline', 'hours', 'notes']) {
+    if (body[field] !== undefined) restaurant[field] = cleanString(body[field], field === 'notes' ? 500 : 200);
+  }
+  if (Array.isArray(body.highlights)) {
+    restaurant.highlights = body.highlights
+      .slice(0, 12)
+      .map((h) => ({
+        name: cleanString(h && h.name, 100) || '',
+        description: cleanString(h && h.description, 300) || '',
+      }))
+      .filter((h) => h.name);
+  }
+
+  store.write('restaurant', restaurant);
+  res.json({ ok: true, restaurant });
+});
+
+router.post('/content/restaurant/photo', upload.single('photo'), (req, res) => {
+  if (!req.file) return res.status(400).json({ ok: false, error: 'No photo uploaded.' });
+  const detected = detectImageType(req.file.buffer);
+  if (!detected) {
+    return res.status(400).json({ ok: false, error: 'That file does not look like a valid JPG, PNG, or WEBP image.' });
+  }
+  const restaurant = store.read('restaurant');
+  const filename = `restaurant-${crypto.randomBytes(4).toString('hex')}.${detected.ext}`;
+  fs.writeFileSync(path.join(imagesDir, filename), req.file.buffer);
+  restaurant.photoUrl = `images/${filename}`;
+  store.write('restaurant', restaurant);
+  res.json({ ok: true, restaurant });
+});
+
+router.get('/content/events-pavilion', (req, res) => {
+  res.json(store.read('eventsPavilion'));
+});
+
+router.put('/content/events-pavilion', (req, res) => {
+  const eventsPavilion = store.read('eventsPavilion');
+  const body = req.body || {};
+
+  for (const field of ['name', 'tagline', 'capacity', 'notes']) {
+    if (body[field] !== undefined) eventsPavilion[field] = cleanString(body[field], field === 'notes' ? 500 : 200);
+  }
+  if (Array.isArray(body.highlights)) {
+    eventsPavilion.highlights = body.highlights
+      .slice(0, 12)
+      .map((h) => ({
+        name: cleanString(h && h.name, 100) || '',
+        description: cleanString(h && h.description, 300) || '',
+      }))
+      .filter((h) => h.name);
+  }
+
+  store.write('eventsPavilion', eventsPavilion);
+  res.json({ ok: true, eventsPavilion });
+});
+
+router.post('/content/events-pavilion/photo', upload.single('photo'), (req, res) => {
+  if (!req.file) return res.status(400).json({ ok: false, error: 'No photo uploaded.' });
+  const detected = detectImageType(req.file.buffer);
+  if (!detected) {
+    return res.status(400).json({ ok: false, error: 'That file does not look like a valid JPG, PNG, or WEBP image.' });
+  }
+  const eventsPavilion = store.read('eventsPavilion');
+  const filename = `events-pavilion-${crypto.randomBytes(4).toString('hex')}.${detected.ext}`;
+  fs.writeFileSync(path.join(imagesDir, filename), req.file.buffer);
+  eventsPavilion.photoUrl = `images/${filename}`;
+  store.write('eventsPavilion', eventsPavilion);
+  res.json({ ok: true, eventsPavilion });
+});
+
 // --- Villas / Pools / Activities / Tours: list-based sections ---
 
 router.get('/content/:section', (req, res) => {
@@ -130,47 +218,6 @@ router.post('/content/:section/:id/photo', upload.single('photo'), (req, res) =>
 
   store.write(key, items);
   res.json({ ok: true, item });
-});
-
-// --- Restaurant: singleton section ---
-
-router.get('/content/restaurant', (req, res) => {
-  res.json(store.read('restaurant'));
-});
-
-router.put('/content/restaurant', (req, res) => {
-  const restaurant = store.read('restaurant');
-  const body = req.body || {};
-
-  for (const field of ['name', 'tagline', 'hours', 'notes']) {
-    if (body[field] !== undefined) restaurant[field] = cleanString(body[field], field === 'notes' ? 500 : 200);
-  }
-  if (Array.isArray(body.highlights)) {
-    restaurant.highlights = body.highlights
-      .slice(0, 12)
-      .map((h) => ({
-        name: cleanString(h && h.name, 100) || '',
-        description: cleanString(h && h.description, 300) || '',
-      }))
-      .filter((h) => h.name);
-  }
-
-  store.write('restaurant', restaurant);
-  res.json({ ok: true, restaurant });
-});
-
-router.post('/content/restaurant/photo', upload.single('photo'), (req, res) => {
-  if (!req.file) return res.status(400).json({ ok: false, error: 'No photo uploaded.' });
-  const detected = detectImageType(req.file.buffer);
-  if (!detected) {
-    return res.status(400).json({ ok: false, error: 'That file does not look like a valid JPG, PNG, or WEBP image.' });
-  }
-  const restaurant = store.read('restaurant');
-  const filename = `restaurant-${crypto.randomBytes(4).toString('hex')}.${detected.ext}`;
-  fs.writeFileSync(path.join(imagesDir, filename), req.file.buffer);
-  restaurant.photoUrl = `images/${filename}`;
-  store.write('restaurant', restaurant);
-  res.json({ ok: true, restaurant });
 });
 
 // --- Theme ---

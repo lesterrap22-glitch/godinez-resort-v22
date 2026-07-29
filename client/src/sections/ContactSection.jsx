@@ -11,7 +11,7 @@ export default function ContactSection() {
             Have a question, or want to book a group event? Reach out and our team will get back to you.
           </p>
           <ul className="contact-list">
-            <li><strong>Location:</strong> Bacolod, Negros Occidental, Philippines</li>
+            <li><strong>Location:</strong> Brgy. Dulao, Bago City, Negros Occidental, Philippines</li>
             <li><strong>Phone:</strong> +63 000 000 0000</li>
             <li><strong>Email:</strong> hello@godinezresort.example</li>
           </ul>

@@ -19,7 +19,7 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   color: var(--color-text);
   background: var(--color-sand);
   line-height: 1.55;
@@ -31,13 +31,16 @@ body {
   padding: 0 28px;
 }
 
-h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: 0 0 12px; color: var(--color-forest-dark); }
+/* Headings, body copy, and buttons all share one typeface (Poppins) rather
+   than mixing a serif display face - matching the clean, single-font look
+   of discoverasr.com's reference site, just with our own weights/sizes. */
+h1, h2, h3 { font-family: "Poppins", sans-serif; font-weight: 600; margin: 0 0 12px; color: var(--color-forest-dark); }
 h2 { font-size: 2.15rem; letter-spacing: -0.01em; }
 p { margin: 0 0 12px; }
 
 .eyebrow {
   display: block;
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -49,12 +52,15 @@ p { margin: 0 0 12px; }
 a { color: var(--color-forest-dark); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* Bold, fully-rounded pill buttons - same weight (700) and shape language
+   as discoverasr.com's "Search & Book" button, just in our own colors. */
 .btn {
   display: inline-block;
+  font-family: "Poppins", sans-serif;
   padding: 12px 22px;
   border-radius: 999px;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
   transition: transform 0.08s ease, box-shadow 0.15s ease;
@@ -200,6 +206,63 @@ a:hover { text-decoration: underline; }
 }
 .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
+/* Bottom-left caption naming whichever spot the hero photo is currently
+   showing (e.g. "G-Resto" / "Negrense flavors, farm-to-table freshness") -
+   the label and note are two different colors on purpose, same idea as the
+   named photo captions on campuestohanhighlandresort.com. Re-keyed per slide
+   so it fades in fresh each time the photo changes. */
+.hero-slide-caption {
+  position: absolute;
+  left: 28px;
+  bottom: 64px;
+  z-index: 2;
+  text-align: left;
+  max-width: 320px;
+  animation: hero-caption-in 0.6s ease both;
+}
+.hero-slide-caption-label {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.hero-slide-caption-note {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+@keyframes hero-caption-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Small dot buttons so a guest can jump straight to a specific hero photo
+   instead of waiting for the auto-cycle - same pattern as carousel dots. */
+.hero-dots {
+  position: absolute;
+  right: 28px;
+  bottom: 26px;
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+}
+.hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.hero-dot:hover { background: rgba(255, 255, 255, 0.55); transform: scale(1.15); }
+.hero-dot-active { background: var(--color-gold); border-color: var(--color-gold); transform: scale(1.2); }
+
 /* Sections */
 .section { padding: 76px 0; }
 .section.alt { background: #f1ead9; }
@@ -247,6 +310,81 @@ a:hover { text-decoration: underline; }
   width: fit-content;
 }
 
+/* Resort Map */
+.resort-map-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+  gap: 32px;
+  margin-top: 28px;
+  align-items: start;
+}
+.resort-map-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.resort-map-svg { width: 100%; height: auto; display: block; }
+
+/* One continuous ground shape (gradient-filled via the SVG's own
+   <linearGradient>, so only the outline comes from CSS here) rather than
+   separate colored zone rectangles - buildings and pools just sit on it,
+   closer to the "one illustrated property" look of a real park map. */
+.map-grounds { stroke: var(--color-forest); stroke-width: 2; stroke-opacity: 0.5; }
+.map-zone-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--color-forest-dark);
+}
+.map-trail { stroke: var(--color-gold-dark); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; stroke-opacity: 0.85; }
+.map-pool-shape { fill: var(--color-teal-light); stroke: var(--color-teal-deep); stroke-width: 1.5; }
+.map-pool-shape-small { fill: var(--color-teal-light); }
+.map-pool-shimmer { fill: #ffffff; fill-opacity: 0.35; }
+.map-tree-canopy { fill: var(--color-forest); }
+.map-tree-trunk { fill: var(--color-gold-dark); }
+.map-tree-shadow { fill: #000000; fill-opacity: 0.08; }
+.map-entrance-icon { font-size: 22px; }
+.map-pin-icon { font-size: 20px; }
+.map-pin-badge { fill: var(--color-forest-dark); stroke: var(--color-gold); stroke-width: 2; }
+.map-pin-number {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--color-gold);
+}
+.map-compass circle { fill: #ffffff; fill-opacity: 0.6; stroke: var(--color-forest); stroke-width: 1.5; }
+.map-compass-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--color-forest-dark);
+}
+.map-compass line { stroke: var(--color-forest-dark); stroke-width: 2; }
+.map-arrowhead { fill: var(--color-forest-dark); }
+
+.map-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.map-legend-item { display: flex; align-items: flex-start; gap: 10px; }
+.map-legend-badge {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-forest-dark);
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-legend-name { font-weight: 700; color: var(--color-forest-dark); }
+.map-legend-note { color: var(--color-gold-dark); }
+
+@media (max-width: 860px) {
+  .resort-map-wrap { grid-template-columns: 1fr; }
+}
+
 .icon-tile {
   position: relative;
   min-height: 150px;
@@ -269,6 +407,7 @@ a:hover { text-decoration: underline; }
 .icon-tile.tile-pool { --tile-color-a: #145c78; --tile-color-b: #4fb3c9; }
 .icon-tile.tile-restaurant { --tile-color-a: #7a3b1e; --tile-color-b: #d9a441; }
 .icon-tile.tile-activity { --tile-color-a: #5c3a21; --tile-color-b: #b8842c; }
+.icon-tile.tile-events { --tile-color-a: #3d2b52; --tile-color-b: #d9a441; }
 
 /* Real photos on cards - full-bleed (object-fit: cover) so every photo
    fills 100% of its tile with no letterboxing or border, cropping evenly
@@ -289,6 +428,7 @@ a:hover { text-decoration: underline; }
 .tour-photo-wrap.tile-pool { --tile-color-a: #145c78; --tile-color-b: #4fb3c9; }
 .tour-photo-wrap.tile-restaurant { --tile-color-a: #7a3b1e; --tile-color-b: #d9a441; }
 .tour-photo-wrap.tile-activity { --tile-color-a: #5c3a21; --tile-color-b: #b8842c; }
+.tour-photo-wrap.tile-events { --tile-color-a: #3d2b52; --tile-color-b: #d9a441; }
 .tour-photo {
   width: 100%;
   height: 100%;
@@ -380,12 +520,13 @@ a:hover { text-decoration: underline; }
 .modal-item-name { color: var(--color-gold-dark); font-weight: 600; margin-bottom: 12px; }
 .booking-form { display: flex; flex-direction: column; gap: 12px; }
 .booking-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; font-weight: 600; color: var(--color-forest-dark); }
-.booking-form input, .booking-form textarea {
+.booking-form input, .booking-form textarea, .booking-form select {
   font-family: inherit;
   font-size: 0.95rem;
   padding: 9px 10px;
   border: 1px solid #d8d2c0;
   border-radius: 8px;
+  background: #fff;
 }
 .booking-feedback { font-size: 0.9rem; min-height: 1.2em; }
 .booking-feedback.success { color: #1f7a3d; }
@@ -519,6 +660,9 @@ a:hover { text-decoration: underline; }
   }
   .hero-slide-active { animation: none !important; }
   .hero-slide:first-child { opacity: 1; }
+  .hero-slide-caption { animation: none !important; }
+  .hero-dot { transition: none !important; }
+  .hero-dot:hover { transform: none !important; }
   .card:hover, .tour-photo-wrap:hover .tour-photo, .logo:hover .logo-mark {
     transform: none !important;
   }
@@ -526,6 +670,9 @@ a:hover { text-decoration: underline; }
 
 @media (max-width: 720px) {
   .hero-logo { height: 64px; }
+  .hero-slide-caption { left: 16px; bottom: 52px; max-width: calc(100% - 32px); }
+  .hero-slide-caption-label { font-size: 1.1rem; }
+  .hero-dots { right: 16px; bottom: 14px; }
   .lightbox-nav { width: 40px; height: 40px; font-size: 1.7rem; }
   .restaurant-wrap { grid-template-columns: 1fr; }
   .restaurant-wrap .tour-photo-wrap { height: 300px; }

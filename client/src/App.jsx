@@ -10,6 +10,8 @@ import VillasSection from './sections/VillasSection.jsx';
 import PoolsSection from './sections/PoolsSection.jsx';
 import RestaurantSection from './sections/RestaurantSection.jsx';
 import ActivitiesSection from './sections/ActivitiesSection.jsx';
+import EventsPavilionSection from './sections/EventsPavilionSection.jsx';
+import ResortMapSection from './sections/ResortMapSection.jsx';
 import ToursSection from './sections/ToursSection.jsx';
 import ContactSection from './sections/ContactSection.jsx';
 
@@ -40,6 +42,8 @@ function SiteContent() {
       <PoolsSection />
       <RestaurantSection />
       <ActivitiesSection />
+      <EventsPavilionSection />
+      <ResortMapSection />
       <ToursSection />
       <ContactSection />
       <Footer />

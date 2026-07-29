@@ -1,6 +1,6 @@
 # Godinez Resort Website
 
-A full front-end + backend website for Godinez Resort in Bacolod, Negros Occidental, with online booking/reservation
+A full front-end + backend website for Godinez Resort in Bago City, Negros Occidental, with online booking/reservation
 requests for villas, tours, and activities, plus a login-protected admin dashboard for editing content and a staff
 view for managing bookings.
 

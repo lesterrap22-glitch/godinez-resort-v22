@@ -17,6 +17,7 @@ const FILES = {
   activities: 'activities.json',
   tours: 'tours.json',
   restaurant: 'restaurant.json',
+  eventsPavilion: 'events-pavilion.json',
   theme: 'theme.json',
 };
 

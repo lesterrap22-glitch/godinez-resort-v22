@@ -13,6 +13,7 @@ router.get('/pools', (req, res) => res.json(store.read('pools')));
 router.get('/activities', (req, res) => res.json(store.read('activities')));
 router.get('/tours', (req, res) => res.json(store.read('tours')));
 router.get('/restaurant', (req, res) => res.json(store.read('restaurant')));
+router.get('/events-pavilion', (req, res) => res.json(store.read('eventsPavilion')));
 
 // Current color theme, as CSS custom-property values the front-end applies
 // on load (see public/js/main.js applyTheme()).

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { goToLogin } from './admin/adminApi.js';
 import ListSectionPanel from './admin/ListSectionPanel.jsx';
 import RestaurantPanel from './admin/RestaurantPanel.jsx';
+import EventsPavilionPanel from './admin/EventsPavilionPanel.jsx';
 import ThemePanel from './admin/ThemePanel.jsx';
 import UsersPanel from './admin/UsersPanel.jsx';
 import AccountPanel from './admin/AccountPanel.jsx';
@@ -11,6 +12,7 @@ const TABS = [
   { key: 'pools', label: 'Pools' },
   { key: 'restaurant', label: 'Restaurant' },
   { key: 'activities', label: 'Activities' },
+  { key: 'eventsPavilion', label: 'Events Pavilion' },
   { key: 'tours', label: 'Tours' },
   { key: 'theme', label: 'Color Theme' },
   { key: 'users', label: 'Staff Accounts' },
@@ -84,6 +86,9 @@ export default function AdminDashboardApp() {
       ))}
       <div className={`tab-panel${activeTab === 'restaurant' ? ' active' : ''}`}>
         {activeTab === 'restaurant' && <RestaurantPanel />}
+      </div>
+      <div className={`tab-panel${activeTab === 'eventsPavilion' ? ' active' : ''}`}>
+        {activeTab === 'eventsPavilion' && <EventsPavilionPanel />}
       </div>
       <div className={`tab-panel${activeTab === 'theme' ? ' active' : ''}`}>
         {activeTab === 'theme' && <ThemePanel />}
