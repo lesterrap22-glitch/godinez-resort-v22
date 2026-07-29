@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSite } from '../context/SiteContext.jsx';
+import { fetchJSON } from '../api.js';
 
 const TYPE_LABELS = {
   villa: 'Book a Villa',
@@ -27,13 +28,32 @@ const GENERAL_ITEM_NAMES = {
   event: 'Events Pavilion Inquiry',
 };
 
+// Villa and Activity both have several specific options underneath them, so
+// once a guest picks one of those two categories a second dropdown appears
+// listing the actual villas/activities (fetched from the same /api endpoint
+// the Villas/Activities sections use), letting them name exactly which one
+// they want instead of just the category.
+const SUB_ITEM_ENDPOINTS = {
+  villa: '/api/villas',
+  activity: '/api/activities',
+};
+const SUB_ITEM_LABELS = {
+  villa: 'Which villa?',
+  activity: 'Which activity?',
+};
+
 export default function BookingModal() {
   const { booking, closeBooking } = useSite();
   const formRef = useRef(null);
   const [feedback, setFeedback] = useState({ text: '', kind: '' });
   const [submitting, setSubmitting] = useState(false);
   const [generalCategory, setGeneralCategory] = useState('villa');
+  const [subItems, setSubItems] = useState({});
+  const [subItemId, setSubItemId] = useState('');
+  const [subLoading, setSubLoading] = useState(false);
   const isGeneral = booking.type === 'general';
+  const hasSubItems = isGeneral && Boolean(SUB_ITEM_ENDPOINTS[generalCategory]);
+  const subItem = hasSubItems ? (subItems[generalCategory] || []).find((item) => item.id === subItemId) : null;
 
   // Reset the form + feedback each time a fresh booking flow opens, the
   // same as openModal() did in main.js.
@@ -47,6 +67,32 @@ export default function BookingModal() {
     }
   }, [booking.open, booking.type, booking.itemId]);
 
+  // Villa and Activity each have several real options underneath them, so
+  // lazily fetch and cache the list the first time a guest lands on either
+  // category - same /api/villas and /api/activities the section cards use.
+  useEffect(() => {
+    if (!hasSubItems || subItems[generalCategory]) return;
+    setSubLoading(true);
+    fetchJSON(SUB_ITEM_ENDPOINTS[generalCategory])
+      .then((data) => setSubItems((prev) => ({ ...prev, [generalCategory]: data })))
+      .catch((err) => console.error(err))
+      .finally(() => setSubLoading(false));
+  }, [hasSubItems, generalCategory, subItems]);
+
+  // Keep the second dropdown's selection valid: default to the first item
+  // once its list loads, and re-pick a default whenever the category swaps
+  // (e.g. Villa -> Activity) so a stale villa ID never lingers.
+  useEffect(() => {
+    if (!hasSubItems) {
+      if (subItemId) setSubItemId('');
+      return;
+    }
+    const list = subItems[generalCategory] || [];
+    if (list.length && !list.some((item) => item.id === subItemId)) {
+      setSubItemId(list[0].id);
+    }
+  }, [hasSubItems, generalCategory, subItems, subItemId]);
+
   if (!booking.open) return null;
 
   async function handleSubmit(e) {
@@ -54,8 +100,8 @@ export default function BookingModal() {
     const data = new FormData(formRef.current);
     const payload = {
       type: isGeneral ? generalCategory : booking.type,
-      itemId: booking.itemId,
-      itemName: isGeneral ? GENERAL_ITEM_NAMES[generalCategory] : booking.itemName,
+      itemId: isGeneral ? (subItem ? subItem.id : booking.itemId) : booking.itemId,
+      itemName: isGeneral ? (subItem ? subItem.name : GENERAL_ITEM_NAMES[generalCategory]) : booking.itemName,
       name: data.get('name'),
       email: data.get('email'),
       phone: data.get('phone'),
@@ -97,13 +143,29 @@ export default function BookingModal() {
       <div className="modal">
         <button type="button" className="modal-close" aria-label="Close" onClick={closeBooking}>&times;</button>
         <h3>{isGeneral ? 'Book Now' : TYPE_LABELS[booking.type] || 'Book Now'}</h3>
-        <p className="modal-item-name">{isGeneral ? GENERAL_ITEM_NAMES[generalCategory] : booking.itemName}</p>
+        <p className="modal-item-name">
+          {isGeneral ? (subItem ? subItem.name : GENERAL_ITEM_NAMES[generalCategory]) : booking.itemName}
+        </p>
         <form ref={formRef} className="booking-form" onSubmit={handleSubmit}>
           {isGeneral && (
             <label>What would you like to book?
               <select value={generalCategory} onChange={(e) => setGeneralCategory(e.target.value)}>
                 {GENERAL_CATEGORIES.map((c) => (
                   <option key={c.value} value={c.value}>{c.label}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          {isGeneral && hasSubItems && (
+            <label>{SUB_ITEM_LABELS[generalCategory]}
+              <select
+                value={subItemId}
+                onChange={(e) => setSubItemId(e.target.value)}
+                disabled={subLoading && !(subItems[generalCategory] || []).length}
+              >
+                {subLoading && !(subItems[generalCategory] || []).length && <option>Loading...</option>}
+                {(subItems[generalCategory] || []).map((item) => (
+                  <option key={item.id} value={item.id}>{item.name}</option>
                 ))}
               </select>
             </label>

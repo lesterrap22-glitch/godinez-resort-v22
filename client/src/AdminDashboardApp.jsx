@@ -100,7 +100,7 @@ export default function AdminDashboardApp() {
         {activeTab === 'account' && user && <AccountPanel user={user} />}
       </div>
 
-      <p><a href="index.html">&larr; Back to site</a></p>
+      <p><a href="/">&larr; Back to site</a></p>
     </div>
   );
 }

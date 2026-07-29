@@ -86,7 +86,7 @@ export default function AdminLoginApp() {
           </button>
           <p className={`login-feedback ${feedback.kind}`} role="status">{feedback.text}</p>
         </form>
-        <p style={{ marginTop: '16px', fontSize: '0.85rem' }}><a href="index.html">&larr; Back to site</a></p>
+        <p style={{ marginTop: '16px', fontSize: '0.85rem' }}><a href="/">&larr; Back to site</a></p>
       </div>
     </div>
   );

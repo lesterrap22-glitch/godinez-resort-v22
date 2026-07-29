@@ -86,6 +86,19 @@ app.use('/api/admin', requireAdmin, adminRoutes);
 app.use('/api', contentRoutes);
 app.use('/api/bookings', bookingRoutes);
 
+// Anyone who lands on /index.html directly - an old bookmark, a link
+// someone shared, a search engine result - gets bounced to the clean root
+// URL instead. This matters for in-page nav links like #tours: browsers
+// keep whatever hash was already in the address bar across a redirect (the
+// hash itself is never even sent to the server), so
+// /index.html#tours -> redirect to / -> address bar ends up showing /#tours,
+// not /index.html#tours. Registered before express.static so it takes
+// priority over just serving the file as-is.
+app.get(['/index.html', '/index.htm'], (req, res) => {
+  const [, query] = req.originalUrl.split('?');
+  res.redirect(301, query ? `/?${query}` : '/');
+});
+
 // Photos live under server/data/images/ (not public/images/) so that, once
 // deployed, mounting a single persistent disk at server/data/ is enough to
 // keep every admin-uploaded photo across restarts/redeploys - see

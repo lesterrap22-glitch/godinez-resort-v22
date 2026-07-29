@@ -150,7 +150,7 @@ export default function AdminApp() {
           </tbody>
         </table>
       )}
-      <p><a href="index.html">&larr; Back to site</a></p>
+      <p><a href="/">&larr; Back to site</a></p>
     </div>
   );
 }
