@@ -79,7 +79,11 @@ export default function Hero() {
       )}
       <div className="hero-content container">
         <h1>
-          <img className="hero-logo" src="/logo.png" alt="Godinez Resort" />
+          {/* Same artwork as /logo.png (used in the header) - this file is a
+              pre-rendered copy with a white outline baked in, generated
+              offline for a consistent, crisp result rather than relying on
+              a live CSS/SVG filter that rendered inconsistently. */}
+          <img className="hero-logo" src="/logo-hero-outlined.png" alt="Godinez Resort" />
         </h1>
         <p>Your home base in Bago City, Negros Occidental - with pool days, villa nights, and heritage tours around the region.</p>
         <p className="hero-facts">Built by Family, Open to Yours</p>

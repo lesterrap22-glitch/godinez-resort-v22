@@ -224,6 +224,8 @@ a:hover { text-decoration: underline; }
   width: auto;
   max-width: 90%;
   object-fit: contain;
+  /* The white outline is now baked into logo-hero-outlined.png itself, so
+     this is just the soft drop-shadow for separation from bright photos. */
   filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
 }
 .hero::before {
